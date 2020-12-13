@@ -23,4 +23,7 @@ public class SharkLevel {
 
     @Column(nullable = false)
     String name;
+
+    @Column(nullable = true)
+    String description;
 }

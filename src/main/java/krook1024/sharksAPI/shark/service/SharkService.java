@@ -41,7 +41,7 @@ public class SharkService {
         Shark currentShark = getOne(id);
 
         currentShark.setName(shark.getName());
-        currentShark.setLevel(shark.getLevel());
+        currentShark.setSharkLevelId(shark.getSharkLevelId());
 
         currentShark = sharkRepository.save(currentShark);
 

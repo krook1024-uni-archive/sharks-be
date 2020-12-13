@@ -1,8 +1,10 @@
 package krook1024.sharksAPI.shark.controller;
 
+import krook1024.sharksAPI.exception.CustomException;
 import krook1024.sharksAPI.shark.model.Shark;
 import krook1024.sharksAPI.shark.service.SharkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +18,13 @@ public class SharkController {
     }
 
     @GetMapping("/shark/{id}")
-    public Shark getOne(@PathVariable int id) {
-        return sharkService.getOne(id);
+    public Shark getOne(@PathVariable String id) {
+        try {
+            int _id = Integer.parseInt(id);
+            return sharkService.getOne(_id);
+        } catch (Exception e) {
+            throw new CustomException("ID is not a number", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/shark")

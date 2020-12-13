@@ -22,7 +22,8 @@ public class Shark {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="level_id")
-    SharkLevel level;
+    private int sharkLevelId;
+
+    @Column(nullable = true)
+    String description;
 }

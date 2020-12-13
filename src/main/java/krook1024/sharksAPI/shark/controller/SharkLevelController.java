@@ -5,13 +5,29 @@ import krook1024.sharksAPI.shark.service.SharkLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @RestController
 public class SharkLevelController {
     @Autowired
     SharkLevelService sharkLevelService;
 
     @GetMapping("/sharklevel")
-    public Iterable<SharkLevel> getAll() {
+    public Iterable<SharkLevel> getAll(@RequestParam(name = "id", required=false)List<String> ids) {
+
+        if (ids != null) {
+            Collection<Integer> ids_ = ids.stream()
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+
+            return sharkLevelService.getAllByIds(ids_);
+        }
+
         return sharkLevelService.getAll();
     }
 

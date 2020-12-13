@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Component
 public class Seeder {
@@ -34,6 +36,7 @@ public class Seeder {
         for (int i = 0; i < 5; i++) {
             SharkLevel sharkLevel = SharkLevel.builder()
                     .name(faker.name().bloodGroup())
+                    .description(String.join(" ", faker.lorem().sentences(3)))
                     .build();
             sharkLevels.add(sharkLevel);
         }
@@ -48,7 +51,8 @@ public class Seeder {
         for (int i = 0; i < 10; i++) {
             Shark shark = Shark.builder()
                     .name(faker.name().lastName())
-                    .level(sharkLevelRepository.findById(1).get())
+                    .sharkLevelId(ThreadLocalRandom.current().nextInt(1, 5))
+                    .description(String.join(" ", faker.lorem().sentences(3)))
                     .build();
             sharks.add(shark);
         }

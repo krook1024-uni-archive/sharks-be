@@ -18,6 +18,10 @@ public class SharkLevelService {
         return sharkLevelRepository.findAll();
     }
 
+    public Iterable<SharkLevel> getAllByIds(Iterable<Integer> ids) {
+        return sharkLevelRepository.findAllById(ids);
+    }
+
     public SharkLevel getOne(int id) {
         Optional<SharkLevel> sharkLevel = sharkLevelRepository.findById(id);
 

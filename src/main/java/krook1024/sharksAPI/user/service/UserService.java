@@ -1,7 +1,7 @@
 package krook1024.sharksAPI.user.service;
 
-import antlr.BaseAST;
 import krook1024.sharksAPI.exception.CustomException;
+import krook1024.sharksAPI.user.dto.UserDTO;
 import krook1024.sharksAPI.user.model.User;
 import krook1024.sharksAPI.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -47,5 +48,26 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public User updateOne(int id, User user) {
+        User currentUser = getOne(id);
+
+        currentUser.setUsername(user.getUsername());
+        currentUser.setEmail(user.getEmail());
+
+        if (!Objects.equals(currentUser.getPassword(), user.getPassword())) {
+            currentUser.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
+        }
+
+        userRepository.save(currentUser);
+
+        return currentUser;
+    }
+
+    public void deleteOne(int id) {
+        User user = getOne(id);
+
+        userRepository.delete(user);
     }
 }
