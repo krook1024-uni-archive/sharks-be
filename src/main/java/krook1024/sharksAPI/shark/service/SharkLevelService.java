@@ -40,6 +40,7 @@ public class SharkLevelService {
         SharkLevel currentSharkLevel = getOne(id);
 
         currentSharkLevel.setName(sharkLevel.getName());
+        currentSharkLevel.setDescription(sharkLevel.getDescription());
 
         return sharkLevelRepository.save(currentSharkLevel);
     }
